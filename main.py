@@ -27,7 +27,7 @@ def flood():
         sleep(delay)
 
 def startThreads():
-    for i in range(1,10):
+    for i in range(1,threads):
         t = threading.Thread(target=flood)
         t.start()
 
