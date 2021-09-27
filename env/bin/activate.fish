@@ -29,7 +29,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/k1f0/git/python-dns-flood/env"
+set -gx VIRTUAL_ENV "/home/k1f0/git/python-dns-flood-scapy/env"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

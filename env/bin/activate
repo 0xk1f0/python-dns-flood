@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/k1f0/git/python-dns-flood/env"
+VIRTUAL_ENV="/home/k1f0/git/python-dns-flood-scapy/env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
