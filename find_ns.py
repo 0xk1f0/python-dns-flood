@@ -15,7 +15,7 @@ def getByIPRange(suppliedIP, startIP=1, endIP=254):
 
         packet = IP(dst=ipToUse)/ICMP()
         res = sr1(packet, timeout=0.05)
-        print(res)
+
         if res is not None:
             print(f"{ipToUse} reachable, trying DNSQR!")
             

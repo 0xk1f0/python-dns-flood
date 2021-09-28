@@ -37,7 +37,7 @@ def startThreads():
         t = threading.Thread(target=flood)
         t.start()
 
-print("DNS-Flooder v0.0.2")
+print("DNS-Flooder v0.0.3")
 sleep(1)
 print("RUN THIS SCRIPT AS ROOT OR IT WILL NOT WORK!")
 sleep(1)
