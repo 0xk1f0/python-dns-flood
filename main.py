@@ -1,4 +1,5 @@
 from scapy.all import *
+import find_ns as fns
 from time import sleep
 import random
 import string
@@ -6,6 +7,7 @@ import threading
 
 delay = 1
 threads = 4
+answ = False
 
 def perform_query(dns, domain, sourceIP):
     packet = IP(src=sourceIP, dst=dns) / UDP() / DNS(rd=1, qd=DNSQR(qname=domain))
@@ -40,9 +42,34 @@ sleep(1)
 print("RUN THIS SCRIPT AS ROOT OR IT WILL NOT WORK!")
 sleep(1)
 
-userDelay = input(f"Delay between requests (def {delay}s): ")
-userDNS = input("DNS Server to use: ")
-userThreads = input(f"Threads to use (def {threads}): ")
+userSearchDNS = input(f"Want to search for the DNS Server? (y|N): ")
+
+if userSearchDNS == "y":
+    userSuppliedRange = input(f'Specify IP Range (f.E. "10.0.0.0"): ')
+    userSuppliedStart = input(f'Start at: ')
+    userSuppliedEnd = input(f'End at (f.E. "1" for "10.0.0.1"): ')
+    answ = fns.getByIPRange(userSuppliedRange, int(userSuppliedStart), int(userSuppliedEnd))
+    if answ is not False:
+        sleep(1)
+        print(f"Automatically using {answ} as target!")
+        sleep(1)
+    else:
+        print("No DNS-Server was found at specified IP-range!")
+        sleep(1)
+        print("Returning to manual setup!")
+        sleep(1)
+else:
+    print("Searching declined!")
+    sleep(1)
+
+userDelay = input(f"Specify Delay between requests (def {delay}s): ")
+
+if answ is False:
+    userDNS = input("Specify DNS Server to use: ")
+else:
+    userDNS = answ
+
+userThreads = input(f"Specify Threads to use (def {threads}): ")
 
 if userDelay == '':
     print(f"Using Default Delay of {delay}")
