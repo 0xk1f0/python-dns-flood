@@ -1,4 +1,4 @@
-#!/home/k1f0/git/python-dns-flood-scapy/env/bin/python
+#!/home/k1f0/git/python-dns-flood/env/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
